@@ -1,0 +1,40 @@
+#!/usr/bin/env python2
+# vim:fileencoding=utf-8
+
+from __future__ import unicode_literals, division, absolute_import, print_function
+from calibre.web.feeds.news import AutomaticNewsRecipe
+from pprint import pprint
+
+class BasicUserRecipe1598134676(AutomaticNewsRecipe):
+    title          = 'Daily'
+    oldest_article = 1
+    max_articles_per_feed = 100
+    auto_cleanup   = True
+
+    feeds          = [
+        ('NYTimes Top Stories', 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml'),
+        ('Gothamist', 'https://gothamist.com/feed/'),
+        ('The City', 'https://www.thecity.nyc/rss/index.xml'),
+        ('Tom Bihn', 'https://www.tombihn.com/blogs/main.atom'),
+        ('Ars Technica', 'http://feeds.arstechnica.com/arstechnica/index'),
+    ]
+
+    remove_tags = [
+      #gothamist right-arrow image attribution
+      dict(name="svg", attrs={'class':'o-gothamist-arrow-icon'}),
+      #gothamist subscribe email form
+      dict(name="div", attrs={'class':'c-newsletter-form'}),
+    ]
+
+    extra_css = '''
+    * {
+      text-align: left;
+    }
+    '''
+
+    no_stylesheets = True
+
+    remove_attributes = ['style', 'font']
+    remote_javascript = True
+
+    #pprint(TOC)
